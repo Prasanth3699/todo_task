@@ -12,7 +12,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
-dotenv.config({ path: "./config/.env" });
+dotenv.config({ path: ".env" });
 
 // Session middleware
 app.use(
