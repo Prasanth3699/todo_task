@@ -177,10 +177,7 @@ const Dashboard = () => {
           </div>
           <div className="mt-4 border-gray-300 rounded-lg">
             {tasks.map((task) => (
-              <div
-                key={task._id}
-                className="mb-2 p-2 bg-blue-100 border rounded"
-              >
+              <div key={task._id}>
                 <TaskItem
                   task={task}
                   onEdit={handleEditClick}

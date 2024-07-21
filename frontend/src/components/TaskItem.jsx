@@ -31,7 +31,7 @@ const TaskItem = ({ task, onEdit, onDelete, onViewDetails }) => {
   }, [task.reminder]);
 
   return (
-    <div className="task-item bg-blue-100 border rounded p-2 mb-2">
+    <div className="task-item bg-blue-100 bg-opacity-50 backdrop-blur-md z-10 border rounded p-2 mb-2 ">
       <div className="card">
         <p className="text-lg font-bold">{task.title}</p>
         <p className="text-m  text-gray-600">{task.description}</p>

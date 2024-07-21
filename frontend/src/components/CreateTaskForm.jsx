@@ -45,7 +45,7 @@ const CreateTaskModal = ({ isOpen, onClose, onCreate }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full ">
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <h2 className="text-2xl mb-4">Create New Task</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -80,15 +80,15 @@ const CreateTaskModal = ({ isOpen, onClose, onCreate }) => {
           className="m-2 block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500"
         />
         <label
-          htmlFor="title"
+          htmlFor="due"
           className="block text-sm font-medium text-gray-700"
         >
-          Title
+          Due Date
         </label>
         <input
           required
           type="date"
-          id="title"
+          id="due"
           value={newDueDate}
           onChange={(e) => newSetDueDate(e.target.value)}
           placeholder="Enter task title"
