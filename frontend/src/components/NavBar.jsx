@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import logo from "../assets/todo-list.jpg";
+import logo from "../assets/todo-list.svg";
 
 function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
