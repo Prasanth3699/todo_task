@@ -49,22 +49,23 @@ app.use(passport.session());
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/tasks", require("./routes/tasks"));
 
-// router.get(
-//   "/google",
-//   passport.authenticate("google", { scope: ["profile", "email"] })
-// );
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
 
-// router.get(
-//   "/google/callback",
-//   passport.authenticate("google", {
-//     failureRedirect: "/login",
-//     session: false,
-//   }),
-//   (req, res) => {
-//     // On success, the req.user object will contain both the user and the token
-//     res.json({ token: req.user.token });
-//   }
-// );
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+    session: false,
+  }),
+  (req, res) => {
+    // On success, the req.user object will contain both the user and the token
+    res.json({ token: req.user.token });
+    res.redirect("/dashboard");
+  }
+);
 
 // Connect to MongoDB
 

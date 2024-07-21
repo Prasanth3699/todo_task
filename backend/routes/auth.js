@@ -21,7 +21,7 @@ router.get(
   (req, res) => {
     // On success, the req.user object will contain both the user and the token
     res.json({ token: req.user.token });
-    res.redirect("/"); //want to add dashboard
+    res.redirect("/dashboard"); //want to add dashboard
   }
 );
 

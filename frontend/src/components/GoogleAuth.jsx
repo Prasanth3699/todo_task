@@ -9,15 +9,21 @@ const GoogleAuth = () => {
 
   const handleLogin = async (googleData) => {
     try {
-      const res = await axios.get(`${base_URL}/api/auth/google/callback`, {
+      const res = await axios.get(`${base_URL}/api/auth/google`, {
         headers: {
-          "x-auth-token": googleData.credential,
+          idToken: googleData.credential,
         },
       });
-      localStorage.setItem("token", res.data.token);
-      navigate("/dashboard");
+      // Check if the response contains the token
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+        navigate("/dashboard");
+      } else {
+        throw new Error("Token not received from server.");
+      }
     } catch (error) {
-      console.error("Google login error:", error);
+      console.error("Google login error:", error.message);
+      alert("Login failed. Please try again.");
     }
   };
 

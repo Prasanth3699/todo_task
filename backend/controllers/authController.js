@@ -6,7 +6,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const express = require("express");
 
-dotenv.config({ path: "./config/.env" });
+dotenv.config({ path: ".env" });
 
 const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
@@ -93,9 +93,9 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
+      callbackURL: "/api/auth/google/callback",
     },
-    async (token, tokenSecret, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       try {
         const existingUser = await User.findOne({ googleId: profile.id });
         if (existingUser) {
@@ -111,14 +111,14 @@ passport.use(
         const savedUser = await newUser.save();
 
         // Generate and return JWT token
-        const payload = { user: { id: newUser.id } };
+        const payload = { user: { id: savedUser.id } };
         jwt.sign(
           payload,
           process.env.JWT_SECRET,
           { expiresIn: "1h" },
           (err, token) => {
             if (err) return done(err, false);
-            done(null, { newUser, token });
+            done(null, { savedUser, token });
           }
         );
         // done(null, savedUser);
@@ -149,7 +149,11 @@ router.get(
   passport.authenticate("google", { session: false }),
   (req, res) => {
     // On success, the req.user object will contain both the user and the token
-    res.json({ token: req.user.token });
+    if (req.user) {
+      res.json({ token: req.user.token });
+    } else {
+      res.status(401).json({ message: "Authentication failed" });
+    }
   }
 );
 
