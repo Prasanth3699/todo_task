@@ -7,8 +7,18 @@ const router = express.Router();
 const session = require("express-session");
 
 const app = express();
+
+const URL = "https://todo-task-gules-sigma.vercel.app";
+const local_URL = "localhost:5173";
+
+// Configure CORS
+const corsOptions = {
+  origin: URL, // Your frontend domain
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
 // Allow all origins during development (be cautious in production)
-app.use(cors());
+app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 5000;
 
