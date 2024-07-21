@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import logo from "../assets/todo-list.jpg";
 
 function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -37,7 +38,7 @@ function Navbar() {
                   <span className="sr-only">Task Manager</span>
                   <img
                     className="w-auto h-8 sm:h-10"
-                    src="/todo-list.svg"
+                    src={logo}
                     loading="lazy"
                     width="202"
                     height="40"

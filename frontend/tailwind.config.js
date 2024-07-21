@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        "custom-svg": "url('/background.svg')",
+        "custom-svg": "url('../assets/background.svg')",
       },
     },
   },
