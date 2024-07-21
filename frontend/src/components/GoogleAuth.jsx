@@ -9,7 +9,7 @@ const GoogleAuth = () => {
 
   const handleLogin = async (googleData) => {
     try {
-      const res = await axios.get(`${base_URL}/api/auth/google/fallback`, {
+      const res = await axios.get(`${base_URL}/api/auth/google/callback`, {
         headers: {
           "x-auth-token": googleData.credential,
         },
