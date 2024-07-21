@@ -19,6 +19,7 @@ const Dashboard = () => {
   const [sortBy, setSortBy] = useState("createdAt");
   const navigate = useNavigate();
   const userName = localStorage.getItem("UserName");
+  const base_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     fetchTasks();
@@ -32,7 +33,7 @@ const Dashboard = () => {
         navigate("/login"); // Redirect to login page
         return;
       }
-      const response = await axios.get("http://localhost:5000/api/tasks", {
+      const response = await axios.get(`${base_URL}/api/tasks`, {
         headers: {
           "x-auth-token": token,
         },
@@ -77,7 +78,7 @@ const Dashboard = () => {
         return;
       }
       await axios.put(
-        `http://localhost:5000/api/tasks/${taskId}`,
+        `${base_URL}/api/tasks/${taskId}`,
         {
           title: newTitle,
           description: newDescription,
@@ -109,7 +110,7 @@ const Dashboard = () => {
         setError("No token found");
         return;
       }
-      await axios.delete(`http://localhost:5000/api/tasks/${taskId}`, {
+      await axios.delete(`${base_URL}/api/tasks/${taskId}`, {
         headers: {
           "x-auth-token": token,
         },

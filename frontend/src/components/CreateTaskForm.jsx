@@ -5,9 +5,10 @@ import axios from "axios";
 const CreateTaskModal = ({ isOpen, onClose, onCreate }) => {
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDescription, setNewTaskDescription] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [reminder, setReminder] = useState("");
+  const [newDueDate, newSetDueDate] = useState("");
+  const [newReminder, newSetReminder] = useState("");
   const [error, setError] = useState("");
+  const base_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleCreateTask = async () => {
     try {
@@ -17,11 +18,12 @@ const CreateTaskModal = ({ isOpen, onClose, onCreate }) => {
         return;
       }
       const response = await axios.post(
-        "http://localhost:5000/api/tasks",
+        `${base_URL}/api/tasks`,
         {
           title: newTaskTitle,
           description: newTaskDescription,
-
+          dueDate: newDueDate,
+          reminder: newReminder,
           // other task properties as needed
         },
         {
@@ -87,8 +89,8 @@ const CreateTaskModal = ({ isOpen, onClose, onCreate }) => {
           required
           type="date"
           id="title"
-          value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
+          value={newDueDate}
+          onChange={(e) => newSetDueDate(e.target.value)}
           placeholder="Enter task title"
           className="m-2 block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500"
         />
@@ -102,8 +104,8 @@ const CreateTaskModal = ({ isOpen, onClose, onCreate }) => {
           required
           type="date"
           id="reminder"
-          value={reminder}
-          onChange={(e) => setReminder(e.target.value)}
+          value={newReminder}
+          onChange={(e) => newSetReminder(e.target.value)}
           placeholder="Enter task title"
           className="m-2 block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500"
         />

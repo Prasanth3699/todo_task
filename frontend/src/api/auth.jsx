@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:5000/api/auth";
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 export const loginUser = async (formData) => {
   // eslint-disable-next-line no-useless-catch

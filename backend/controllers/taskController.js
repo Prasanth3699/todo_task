@@ -13,13 +13,14 @@ const getAllTasks = async (req, res) => {
 };
 
 const createTask = async (req, res) => {
-  const { title, description, status } = req.body;
-
+  const { title, description, status, dueDate, reminder } = req.body;
   try {
     const newTask = new Task({
       title,
       description,
       status,
+      dueDate,
+      reminder,
       user: req.user.id,
     });
 

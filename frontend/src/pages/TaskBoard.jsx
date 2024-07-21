@@ -14,6 +14,7 @@ const TaskBoard = () => {
     "in-progress": [],
     done: [],
   });
+  const base_URL = import.meta.env.VITE_API_BASE_URL;
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("createdAt");
   const [error, setError] = useState("");
@@ -31,25 +32,19 @@ const TaskBoard = () => {
           navigate("/login"); // Redirect to login page
           return;
         }
-        console.log(token);
-        const res = await axios.get("http://localhost:5000/api/tasks", {
+        const res = await axios.get(`${base_URL}/api/tasks`, {
           headers: {
             "x-auth-token": token,
           },
         });
-        console.log(res.data);
         const tasks = res.data.reduce(
           (acc, task) => {
-            console.log("<<<<<<<<", acc);
-            console.log(">>>>>>>>", task);
             acc[task.status].push(task);
             return acc;
           },
           { todo: [], "in-progress": [], done: [] }
         );
-        console.log(tasks);
         let fetchedTasks = res.data;
-        console.log("##########", fetchedTasks);
         // Filter tasks based on search term
         if (searchTerm) {
           fetchedTasks = fetchedTasks.filter(
@@ -100,6 +95,7 @@ const TaskBoard = () => {
       return;
     }
 
+    // Update task status in local state first
     if (start === finish) {
       const newTaskOrder = Array.from(start);
       newTaskOrder.splice(source.index, 1);
@@ -120,20 +116,20 @@ const TaskBoard = () => {
         [source.droppableId]: startTaskOrder,
         [destination.droppableId]: finishTaskOrder,
       }));
+    }
 
-      // Update task status in the backend
-      try {
-        await axios.put(
-          `http://localhost:5000/api/tasks/${draggableId}`,
-          {
-            ...movedTask, // Include all necessary fields
-            status: destination.droppableId,
-          },
-          { headers: { "x-auth-token": localStorage.getItem("token") } }
-        );
-      } catch (error) {
-        console.error("Error updating task status:", error);
-      }
+    // Update task status in the backend
+    try {
+      await axios.put(
+        `${base_URL}/api/tasks/${draggableId}`,
+        {
+          ...movedTask, // Include all necessary fields
+          status: destination.droppableId,
+        },
+        { headers: { "x-auth-token": localStorage.getItem("token") } }
+      );
+    } catch (error) {
+      console.error("Error updating task status:", error);
     }
   };
 
@@ -152,7 +148,7 @@ const TaskBoard = () => {
         return;
       }
       await axios.put(
-        `http://localhost:5000/api/tasks/${taskId}`,
+        `${base_URL}/api/tasks/${taskId}`,
         {
           title: newTitle,
           description: newDescription,
@@ -166,33 +162,33 @@ const TaskBoard = () => {
         }
       );
 
-      setTasks((prevTasks) => {
-        const currentStatus = prevTasks.currentStatus;
+      // setTasks((prevTasks) => {
+      //   const currentStatus = prevTasks.currentStatus;
 
-        // Check if currentStatus is a valid key in prevTasks
-        if (currentStatus && prevTasks[currentStatus]) {
-          return {
-            ...prevTasks,
-            [currentStatus]: prevTasks[currentStatus].map((task) =>
-              task._id === taskId
-                ? { ...task, title: newTitle, description: newDescription }
-                : task
-            ),
-          };
-        } else {
-          console.error("Invalid currentStatus:", currentStatus);
-          return prevTasks; // Return prevTasks unchanged if currentStatus is invalid
-        }
-      });
-      // setTasks((prevTasks) => ({
-      //   ...prevTasks,
-      //   [prevTasks.currentStatus]: prevTasks[prevTasks.currentStatus].map(
-      //     (task) =>
-      //       task._id === taskId
-      //         ? { ...task, title: newTitle, description: newDescription }
-      //         : task
-      //   ),
-      // })); // Update task in local state
+      //   // Check if currentStatus is a valid key in prevTasks
+      //   if (currentStatus && prevTasks[currentStatus]) {
+      //     return {
+      //       ...prevTasks,
+      //       [currentStatus]: prevTasks[currentStatus].map((task) =>
+      //         task._id === taskId
+      //           ? { ...task, title: newTitle, description: newDescription }
+      //           : task
+      //       ),
+      //     };
+      //   } else {
+      //     console.error("Invalid currentStatus:", currentStatus);
+      //     return prevTasks; // Return prevTasks unchanged if currentStatus is invalid
+      //   }
+      // });
+      setTasks((prevTasks) => ({
+        ...prevTasks,
+        [prevTasks.currentStatus]: prevTasks[prevTasks.currentStatus].map(
+          (task) =>
+            task._id === taskId
+              ? { ...task, title: newTitle, description: newDescription }
+              : task
+        ),
+      })); // Update task in local state
     } catch (error) {
       console.error("Error updating task:", error);
     }
@@ -202,7 +198,7 @@ const TaskBoard = () => {
     try {
       const token = localStorage.getItem("token");
 
-      await axios.delete(`http://localhost:5000/api/tasks/${taskId}`, {
+      await axios.delete(`${base_URL}/api/tasks/${taskId}`, {
         headers: {
           "x-auth-token": token,
         },

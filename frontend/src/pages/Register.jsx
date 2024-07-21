@@ -10,20 +10,18 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const base_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        {
-          username,
-          email,
-          password,
-        }
-      );
+      const response = await axios.post(`${base_URL}/api/auth/register`, {
+        username,
+        email,
+        password,
+      });
       console.log(response.data); // Log the response for debugging
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       setError(error.response.data.message);
     }
@@ -32,9 +30,9 @@ const Register = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+      <div className="min-h-screen flex flex-col justify-center sm:py-12">
         <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
-          <h1 className="font-bold text-center text-2xl mb-5">Login</h1>
+          <h1 className="font-bold text-center text-2xl mb-5">Register</h1>
           <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
             <div className="px-5 py-7">
               {error && <p className="text-red-500 mb-4">{error}</p>}

@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   googleId: {
     type: String,
   },
-  avatar: String,
+  avatar: { type: String, default: "" },
 });
 
 module.exports = mongoose.model("User", userSchema);

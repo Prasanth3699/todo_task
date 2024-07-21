@@ -4,10 +4,12 @@ import axios from "axios";
 
 const GoogleAuth = () => {
   const navigate = useNavigate();
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const base_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleLogin = async (googleData) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/google", {
+      const res = await axios.get(`${base_URL}/api/auth/google/fallback`, {
         headers: {
           "x-auth-token": googleData.credential,
         },
@@ -25,7 +27,7 @@ const GoogleAuth = () => {
 
   return (
     // eslint-disable-next-line no-undef
-    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+    <GoogleOAuthProvider clientId={googleClientId}>
       <GoogleLogin
         onSuccess={handleLogin}
         onFailure={handleFailure}

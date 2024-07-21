@@ -17,6 +17,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // User state
   const [loading, setLoading] = useState(true); // Loading state
+  const base_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     // Function to check if user is authenticated (e.g., using token)
@@ -25,7 +26,7 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         try {
           const response = await axios.post(
-            "http://localhost:5000/api/auth",
+            `${base_URL}/api/auth`,
 
             {
               headers: {
@@ -49,13 +50,10 @@ export const AuthProvider = ({ children }) => {
   // Function to handle user login
   const login = async (email, password) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post(`${base_URL}/api/auth/login`, {
+        email,
+        password,
+      });
       localStorage.setItem("token", response.data.token); // Store token in localStorage
       console.log(jwtDecode(response.data.token).user);
       setUser(jwtDecode(response.data.token).user.id); // Set user data

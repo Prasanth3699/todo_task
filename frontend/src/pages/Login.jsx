@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://todo-task-qpt2.onrender.com/api/auth/login",
         {
           email,
           password,
@@ -24,7 +24,7 @@ const Login = () => {
       localStorage.setItem("token", token); // Store token in localStorage
       localStorage.setItem("UserName", user.username); // Store username in localStorage
       axios.defaults.headers.common["Authorization"] = response.data.token; // Set token for all subsequent requests
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       setError(error.response.data.message);
       console.log(error.response.data.message);
@@ -95,55 +95,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// import { useState } from "react";
-// // import axios from "axios";
-// // import { useHistory } from "react-router-dom";
-// import { useAuth } from "../context/AuthContext";
-// import { useNavigate } from "react-router-dom";
-
-// const Login = () => {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const { login } = useAuth();
-//   // const history = useHistory();
-//   const navigate = useNavigate();
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     try {
-//       login(email, password);
-//       navigate("/dashboard");
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
-
-//   const handleGoogleLogin = () => {
-//     window.location.href = "/api/auth/google";
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <input
-//         type="email"
-//         value={email}
-//         onChange={(e) => setEmail(e.target.value)}
-//         placeholder="Email"
-//       />
-//       <input
-//         type="password"
-//         value={password}
-//         onChange={(e) => setPassword(e.target.value)}
-//         placeholder="Password"
-//       />
-//       <button type="submit">Login</button>
-//       <button type="button" onClick={handleGoogleLogin}>
-//         Login with Google
-//       </button>
-//     </form>
-//   );
-// };
-
-// export default Login;

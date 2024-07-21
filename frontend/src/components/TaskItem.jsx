@@ -1,6 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import React from "react";
+import { format } from "date-fns";
 import { toast } from "react-toastify";
 
 const TaskItem = ({ task, onEdit, onDelete, onViewDetails }) => {
@@ -35,8 +35,10 @@ const TaskItem = ({ task, onEdit, onDelete, onViewDetails }) => {
       <div className="card">
         <p className="text-lg font-bold">{task.title}</p>
         <p className="text-m  text-gray-600">{task.description}</p>
-        <p className="text-m mt-8 text-gray-600">{task.createdAt}</p>
-        <div className="mt-2 flex justify-end space-x-4">
+        <p className="text-m mt-8 text-gray-600">
+          {format(new Date(task.createdAt), "MMMM d, yyyy h:mm a")}
+        </p>
+        <div className="mt-6 flex space-x-4">
           {task.dueDate && (
             <p className="p-2 font-semibold text-gray-800">
               Due: {new Date(task.dueDate).toLocaleDateString()}
@@ -47,7 +49,8 @@ const TaskItem = ({ task, onEdit, onDelete, onViewDetails }) => {
               Reminder: {new Date(task.reminder).toLocaleString()}
             </p>
           )}
-
+        </div>
+        <div className="mt-2 flex justify-end space-x-4">
           <button
             onClick={() => onDelete(task._id)}
             className="text-xs bg-red-500 hover:bg-red-700 text-white p-2 rounded-lg button-sm mt-2"

@@ -8,8 +8,8 @@ const taskSchema = new mongoose.Schema({
     enum: ["todo", "in-progress", "done"],
     default: "todo",
   }, // Example: 'todo', 'inProgress', 'done'
-  dueDate: { type: Date },
-  reminder: { type: Date },
+  dueDate: { type: Date, required: true },
+  reminder: { type: Date, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },

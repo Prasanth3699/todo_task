@@ -26,23 +26,23 @@ function Navbar() {
   return (
     <>
       <div className="px- mx-auto max-w-7xl sm:px-6 ">
-        <div className="relative pt-6 pb-4 sm:pb-4">
+        <div className="relative pt-1 pb-4 sm:pb-4">
           <nav
             className="relative flex items-center justify-between sm:h-10 md:justify-center"
             aria-label="Global"
           >
             <div className="flex items-center flex-1 md:absolute md:inset-y-0 md:left-0">
               <div className="flex items-center justify-between w-full md:w-auto">
-                <a href="#">
-                  <span className="sr-only">Todo App</span>
+                <Link to="/dashboard">
+                  <span className="sr-only">Task Manager</span>
                   <img
                     className="w-auto h-8 sm:h-10"
-                    src="https://www.svgrepo.com/show/448244/pack.svg"
+                    src="/todo-list.svg"
                     loading="lazy"
                     width="202"
                     height="40"
                   />
-                </a>
+                </Link>
                 <div className="flex items-center -mr-2 md:hidden">
                   <button
                     className="inline-flex items-center justify-center p-2 text-gray-400 bg-gray-50 rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-50"
@@ -70,19 +70,19 @@ function Navbar() {
               </div>
             </div>
             <div className="hidden md:flex md:space-x-10 list-none">
-              {/* <li>
-                <Link
-                  to="/"
-                  className="text-base font-semibold text-gray-500 list-none hover:text-blue-700"
-                >
-                  Home
-                </Link>
-              </li> */}
-
               <li>
                 <Link
                   to="/"
-                  className="text-base font-semibold  text-gray-500 list-none hover:text-blue-700"
+                  className="text-base font-semibold text-gray-900 list-none hover:text-blue-700"
+                >
+                  Home
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="/dashboard"
+                  className="text-base font-semibold  text-gray-900 list-none hover:text-blue-700"
                 >
                   Dashboard
                 </Link>
@@ -90,7 +90,7 @@ function Navbar() {
               <li>
                 <Link
                   to="/taskboard"
-                  className="text-base font-semibold text-gray-500 list-none  hover:text-blue-700 "
+                  className="text-base font-semibold text-gray-900 list-none  hover:text-blue-700 "
                 >
                   Task Board
                 </Link>
