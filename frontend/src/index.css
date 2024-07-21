@@ -10,5 +10,5 @@ body {
   @apply relative z-10;
 }
 .bg-custom {
-  background-image: url("../assets/background.svg");
+  background-image: url("./assets/background.svg");
 }
