@@ -17,8 +17,12 @@ const corsOptions = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
+
 // Allow all origins during development (be cautious in production)
 app.use(cors(corsOptions));
+
+// Handle OPTIONS requests for preflight
+app.options("*", cors(corsOptions));
 
 const PORT = process.env.PORT || 5000;
 
