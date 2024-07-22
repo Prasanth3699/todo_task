@@ -17,7 +17,7 @@ const Home = () => {
         <main className="relative z-10 container mx-auto p-4 text-center text-white min-h-screen overflow-y-auto">
           <Navbar />
           <div className="max-w-7xl mx-auto py-12 sm:px-6 lg:px-8">
-            <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div className="bg-gray-50 shadow overflow-hidden rounded-lg">
               <div className="px-4 py-5 sm:px-6">
                 <h2 className="text-2xl leading-6 font-medium text-gray-900">
                   Task Manager helps teams move work forward.
