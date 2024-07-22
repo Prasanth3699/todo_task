@@ -23,7 +23,7 @@ const Register = () => {
       console.log(response.data); // Log the response for debugging
       navigate("/login");
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error.response.data.error);
     }
   };
 
@@ -82,7 +82,10 @@ const Register = () => {
               </form>
               <div className="mt-3">
                 <div className="grid  ">
-                  <button type="button">
+                  <button
+                    type="button"
+                    className="w-full inline-block transition duration-200"
+                  >
                     <GoogleAuth />
                   </button>
                 </div>

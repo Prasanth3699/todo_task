@@ -7,6 +7,7 @@ import ViewTaskModal from "../components/ViewTaskModal";
 import CreateTaskModal from "../components/CreateTaskForm";
 import TaskItem from "../components/TaskItem";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -141,7 +142,7 @@ const Dashboard = () => {
       <div className="container mx-auto p-4">
         <h1 className="font-semibold text-2xl mb-5 ">Dashboard</h1>
         {error && <p className="text-red-500 mb-4">{error}</p>}
-        <div className="p-2 mb-3 font-semibold text-xl">
+        <div className="p-2 mb-3 font-semibold text-xl capitalize">
           Welcome: {userName}
         </div>
         <button
@@ -150,6 +151,23 @@ const Dashboard = () => {
         >
           Add New Task
         </button>
+        <nav className="flex my-4" aria-label="breadcrumb">
+          <ol className="flex space-x-2">
+            <li>
+              <Link to="/" className="text-blue-600 hover:underline">
+                Home
+              </Link>
+            </li>
+            <li>
+              <span className="text-gray-500">/</span>
+            </li>
+            <li>
+              <Link to="/dashboard" className="text-grey-800 hover:underline">
+                Dashboard
+              </Link>
+            </li>
+          </ol>
+        </nav>
 
         <div className="card mt-4 border-gray-300 rounded-lg shadow-md p-4">
           <input
@@ -157,16 +175,25 @@ const Dashboard = () => {
             placeholder="Search tasks"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="block w-1/6 m-2 p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500"
+            className="block w-full sm:w-1/6 m-2 p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500"
           />
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="block w-1/6 m-2 p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 "
+            className="block w-full sm:w-1/6 m-2 p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="createdAt">Sort by: Recent</option>
             <option value="title">Sort by: Title</option>
           </select>
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <Link
+            to="/taskboard"
+            className="text-white  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br  focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
+          >
+            Go to Task Board
+          </Link>
         </div>
 
         <div className="mt-4 border-gray-300 rounded-lg shadow-md p-4">

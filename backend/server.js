@@ -9,7 +9,7 @@ const session = require("express-session");
 const app = express();
 
 const URL = "https://todo-task-gules-sigma.vercel.app";
-const local_URL = "localhost:5173";
+// const URL = "localhost:5173"; //localhost
 
 // Configure CORS
 const corsOptions = {

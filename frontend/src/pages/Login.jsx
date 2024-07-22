@@ -9,25 +9,24 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const base_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "https://todo-task-qpt2.onrender.com/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post(`${base_URL}/api/auth/login`, {
+        email,
+        password,
+      });
       const { token, user } = response.data;
+      console.log(response);
       localStorage.setItem("token", token); // Store token in localStorage
       localStorage.setItem("UserName", user.username); // Store username in localStorage
       axios.defaults.headers.common["Authorization"] = response.data.token; // Set token for all subsequent requests
       navigate("/dashboard");
     } catch (error) {
-      setError(error.response.data.message);
-      console.log(error.response.data.message);
+      setError(error.response.data.error);
+      console.log(error.response.data.error);
     }
   };
 
@@ -72,7 +71,10 @@ const Login = () => {
               </form>
               <div className="mt-3">
                 <div className="grid  ">
-                  <button type="button">
+                  <button
+                    type="button"
+                    className="w-full inline-block transition duration-200"
+                  >
                     <GoogleAuth />
                   </button>
                 </div>

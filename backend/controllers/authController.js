@@ -55,13 +55,16 @@ const loginUser = async (req, res) => {
     // Check if user exists
     let user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ error: "Invalid credentials" });
+      responseData = res
+        .status(400)
+        .json({ error: "Invalid user name or password" });
+      return responseData;
     }
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ error: "Invalid credentials" });
+      return res.status(400).json({ error: "Invalid user name or password" });
     }
 
     // Create and return JWT token
@@ -93,7 +96,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/api/auth/google/callback",
+      callbackURL: "auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
