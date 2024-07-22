@@ -8,12 +8,21 @@ const session = require("express-session");
 
 const app = express();
 
-const URL = "https://todo-task-gules-sigma.vercel.app";
-// const URL = "localhost:5173"; //localhost
+// Define allowed origins
+const allowedOrigins = [
+  "https://todo-task-gules-sigma.vercel.app",
+  "https://todo-task-3w21f383j-prasanths-projects-1c782ce1.vercel.app",
+  // Add more allowed origins if necessary
+];
 
-// Configure CORS
 const corsOptions = {
-  origin: URL, // Your frontend domain
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
